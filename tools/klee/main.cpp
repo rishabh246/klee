@@ -636,7 +636,7 @@ void KleeHandler::processTestCase(const ExecutionState &state,
 
 bool dumpCallInfo(const CallInfo& ci, llvm::raw_ostream& file) {
   file << ci.callPlace.getLine() <<":" <<ci.f->getName() <<"(";
-  assert(ci.returned);
+  if (!ci.returned) return false;
   for (std::vector< CallArg >::const_iterator argIter = ci.args.begin(),
          end = ci.args.end(); argIter != end; ++argIter) {
     const CallArg *arg = &*argIter;
