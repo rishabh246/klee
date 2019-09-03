@@ -991,8 +991,8 @@ def cdqe(args):
     _write_reg(dst, val)
 
 
-def nop(_):
-    return
+def default(_):
+    raise Exception("Not Implemented Instruction")
 
 
 #### Instruction Implementations End   ####
