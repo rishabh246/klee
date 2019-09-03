@@ -1,7 +1,6 @@
 import sympy
 import sympy.parsing.sympy_parser
-import inspect
-
+#import inspect
 
 mem  = {}
 regs = {}
@@ -10,6 +9,7 @@ touched_locs = []
 
 real_reg_vals = []
 real_reg_vals_cntr = 1
+
 
 def check(opcode, args, reg):
     global real_reg_vals_cntr
@@ -41,30 +41,28 @@ def print_touched_locs():
     touched_locs = list(set(touched_locs))
     for i in touched_locs:
         print i
-        #if len(i.args) == 3:
-        #    print type(i.args[0]), type(i.args[1]), type(i.args[2]), i.args[2].is_Integer, i.args[2].is_Symbol
 
 
 def init():
     global regs, mem, sym_cntr, real_reg_vals
     regs.clear()
-    regs["rax"] = real_reg_vals[0]["rax"]#[sympy.Symbol("rax"), 1][1]
-    regs["rbx"] = real_reg_vals[0]["rbx"]#[sympy.Symbol("rbx"), 93824994345648][1]
-    regs["rdi"] = real_reg_vals[0]["rdi"]#[sympy.Symbol("rdi"), 93824994345568][1]
-    regs["rsi"] = real_reg_vals[0]["rsi"]#[sympy.Symbol("rsi"), 93824994345648][1]
-    regs["rdx"] = real_reg_vals[0]["rdx"]#[sympy.Symbol("rdx"), 93824994345680][1]
-    regs["rcx"] = real_reg_vals[0]["rcx"]#[sympy.Symbol("rcx"), 140737017749520][1]
-    regs["rbp"] = real_reg_vals[0]["rbp"]#[sympy.Symbol("rbp"), 93824994345712][1]
-    regs["rsp"] = real_reg_vals[0]["rsp"]#[sympy.Symbol("rsp"), 140737488345352][1]
-    regs["r8"]  = real_reg_vals[0]["r8"]#[sympy.Symbol("r8"), 140737017483280][1]
-    regs["r9"]  = real_reg_vals[0]["r9"]#[sympy.Symbol("r9"), 93824994345648][1]
-    regs["r10"] = real_reg_vals[0]["r10"]#[sympy.Symbol("r10"), 26721][1]
-    regs["r11"] = real_reg_vals[0]["r11"]#[sympy.Symbol("r11"), 65535][1]
-    regs["r12"] = real_reg_vals[0]["r12"]#[sympy.Symbol("r12"), 140737488345376][1]
-    regs["r13"] = real_reg_vals[0]["r13"]#[sympy.Symbol("r13"), 140737488345680][1]
-    regs["r14"] = real_reg_vals[0]["r14"]#[sympy.Symbol("r14"), 0][1]
-    regs["r15"] = real_reg_vals[0]["r15"]#[sympy.Symbol("r15"), 0][1]
-    sym_cntr = 0
+    regs["rax"] = real_reg_vals[0]["rax"]#sympy.Symbol("rax")
+    regs["rbx"] = real_reg_vals[0]["rbx"]#sympy.Symbol("rbx")
+    regs["rdi"] = real_reg_vals[0]["rdi"]#sympy.Symbol("rdi")
+    regs["rsi"] = real_reg_vals[0]["rsi"]#sympy.Symbol("rsi")
+    regs["rdx"] = real_reg_vals[0]["rdx"]#sympy.Symbol("rdx")
+    regs["rcx"] = real_reg_vals[0]["rcx"]#sympy.Symbol("rcx")
+    regs["rbp"] = real_reg_vals[0]["rbp"]#sympy.Symbol("rbp")
+    regs["rsp"] = real_reg_vals[0]["rsp"]#sympy.Symbol("rsp")
+    regs["r8"]  = real_reg_vals[0]["r8"]#sympy.Symbol("r8")
+    regs["r9"]  = real_reg_vals[0]["r9"]#sympy.Symbol("r9")
+    regs["r10"] = real_reg_vals[0]["r10"]#sympy.Symbol("r10")
+    regs["r11"] = real_reg_vals[0]["r11"]#sympy.Symbol("r11")
+    regs["r12"] = real_reg_vals[0]["r12"]#sympy.Symbol("r12")
+    regs["r13"] = real_reg_vals[0]["r13"]#sympy.Symbol("r13")
+    regs["r14"] = real_reg_vals[0]["r14"]#sympy.Symbol("r14")
+    regs["r15"] = real_reg_vals[0]["r15"]#sympy.Symbol("r15")
+    sym_cntr = 0#16
     mem.clear()
 
 
@@ -108,6 +106,8 @@ def parse(ip_file):
 
 
 #### Helper Functions Start ####
+
+
 def _get_sym_val():
     global sym_cntr
     val = sympy.Symbol("sym_" + str(sym_cntr))
@@ -250,10 +250,14 @@ def _get_address(x):
 
 def logical_rshift(val, n):
     return (val >> n) & (0x7fffffff >> (n - 1))
+
+
 #### Helper Functions End   ####
 
 
 #### Instruction Implementations Start ####
+
+
 def push(args):
     global regs, mem
     data_length = _get_data_length(args[0])
@@ -992,3 +996,5 @@ def nop(_):
 
 
 #### Instruction Implementations End   ####
+
+
