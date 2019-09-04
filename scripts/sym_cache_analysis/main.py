@@ -2,10 +2,16 @@ import opcodes
 import sys
 
 
+"""
+    Use as follows: python main.py pincounts.log
+"""
+
+
+# List of instructions that are not important.
 dont_care = ["test", "nop", "jnle", "jnz",
              "jz", "jmp", "jl", "js",
              "jle", "jbe", "jnbe", "jb",
-             "jnb", "jnl", "syscall"]# List of instructions that are not important.
+             "jnb", "jnl", "syscall"]
 
 def main():
     ip_file = sys.argv[1]
@@ -20,5 +26,7 @@ def main():
         #opcodes.check(opcode, args, "rax")
     opcodes.print_touched_locs()
     
+
 main()
+
 
